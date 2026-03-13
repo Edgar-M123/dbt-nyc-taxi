@@ -1,0 +1,17 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# DBT
+target/
+dbt_packages/
+logs/
+# legacy -- renamed to dbt_packages in dbt v1
+dbt_modules/
