@@ -2,7 +2,7 @@
 version: 2
 
 models:
-  - name: stg_yellow_trips
+  - name: stg_fct_yellow_trips
     description: "Staging yellow trip data"
     columns:
       - name: trip_id
@@ -10,4 +10,18 @@ models:
         data_tests:
           - unique
           - not_null
+      - name: pickup_date_key
+        description: "Key to date dimension"
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_dim_date')
+                field: date_key
+      - name: dropoff_date_key
+        description: "Key to date dimension"
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_dim_date')
+                field: date_key
 

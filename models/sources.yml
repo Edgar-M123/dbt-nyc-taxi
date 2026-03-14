@@ -1,0 +1,10 @@
+sources:
+  - name: raw_taxi
+    database: raw
+    schema: taxi
+    config:
+      enabled: true
+    tables:
+      - name: yellow_tripdata
+        description: Raw data of yellow taxi trips
+
