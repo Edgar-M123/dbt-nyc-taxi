@@ -24,4 +24,17 @@ models:
               arguments:
                 to: ref('stg_dim_date')
                 field: date_key
-
+      - name: pickup_time_key
+        description: "Key to time dimension"
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_dim_minute')
+                field: time_key
+      - name: dropoff_time_key
+        description: "Key to time dimension"
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_dim_minute')
+                field: time_key
