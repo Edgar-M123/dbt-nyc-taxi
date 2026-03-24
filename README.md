@@ -17,7 +17,7 @@ The staging model `stg_yellow_trips` performs the following transformations:
 
 ### Intermediate
 
-The intermediate model `int_fct_yellow_trips` performes the following transformations:
+The intermediate model `int_fct_yellow_trips` performs the following transformations:
 * Add surrogate key `trip_id` by hashing some columns
 * Remove rows where the pickup time is after the dropoff time as these are erroneous
 * Remove 'refunded' rows which are duplicate rows with negative fare amounts. Both the original row (positive amount) and refunded row (negative amount) is removed.
