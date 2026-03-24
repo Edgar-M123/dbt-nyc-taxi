@@ -2,8 +2,8 @@
 version: 2
 
 models:
-  - name: stg_fct_yellow_trips
-    description: "Staging yellow trip data"
+  - name: int_fct_yellow_trips
+    description: "Intermediate yellow trip data"
     columns:
       - name: trip_id
         description: "The primary key for this table"
@@ -15,26 +15,26 @@ models:
         data_tests:
           - relationships:
               arguments:
-                to: ref('stg_dim_date')
+                to: ref('dim_date')
                 field: date_key
       - name: dropoff_date_key
         description: "Key to date dimension"
         data_tests:
           - relationships:
               arguments:
-                to: ref('stg_dim_date')
+                to: ref('dim_date')
                 field: date_key
       - name: pickup_time_key
         description: "Key to time dimension"
         data_tests:
           - relationships:
               arguments:
-                to: ref('stg_dim_minute')
+                to: ref('dim_minute')
                 field: time_key
       - name: dropoff_time_key
         description: "Key to time dimension"
         data_tests:
           - relationships:
               arguments:
-                to: ref('stg_dim_minute')
+                to: ref('dim_minute')
                 field: time_key

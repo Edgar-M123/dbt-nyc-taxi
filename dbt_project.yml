@@ -29,7 +29,12 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   nyc_taxi_snowflake:
     # Config indicated by + and applies to all files under models/example/
-    +materialized: table
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: ephemeral
+    marts:
+      +materialized: table
 
 vars:
   "dbt_date:time_zone": "America/New_York"
