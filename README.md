@@ -1,15 +1,38 @@
-Welcome to your new dbt project!
 
-### Using the starter project
+# NYC Taxi DBT Models
 
-Try running the following commands:
-- dbt run
-- dbt test
+This project showcases how NYC Yellow Taxi data can be transformed and modelled in DBT.
+
+This project uses **Snowflake** as the cloud database. Source yellow taxi trip data is loaded into the table `raw.taxi.yellow_tripdata`.
+
+## Models
+
+### Staging
+
+The staging model `stg_yellow_trips` performs the following transformations:
+* Rename column names to a consistent convention
+* Convert integer unix timestamps to a SQL Timestamp data type.
+* Coalesces some null values to an appropriate value.
 
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+### Intermediate
+
+The intermediate model `int_fct_yellow_trips` performes the following transformations:
+* Add surrogate key `trip_id` by hashing some columns
+* Remove rows where the pickup time is after the dropoff time as these are erroneous
+* Remove 'refunded' rows which are duplicate rows with negative fare amounts. Both the original row (positive amount) and refunded row (negative amount) is removed.
+* Removed rows with 0 payment amount.
+* Added date keys and time keys.
+
+### Marts
+
+The date dimension and time (minute) dimension are available in as marts.
+
+The model `yellow_trips` joins the `int_fct_yellow_trips` data to the date and time dimensions.
+
+
+## Upcoming Additions
+
+1. Loading location dimension provided by the NYC Taxi data as seeds.
+
+
