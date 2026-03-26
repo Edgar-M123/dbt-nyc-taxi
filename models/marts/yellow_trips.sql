@@ -1,6 +1,6 @@
 
 with yellow_trips as (
-    select * from {{ ref('int_fct_yellow_trips') }}
+    select * from {{ ref('int_yellow_trips_deduplicated') }}
 ),
 
 dim_date as (

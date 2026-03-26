@@ -1,0 +1,26 @@
+
+version: 2
+
+models:
+  - name: stg_yellow_trips
+    description: "Staging yellow trip data"
+    columns:
+      - name: vendor_id
+        description: "Code indicating the Yellow Taxi vendor used by the rider. 1 = Creative Mobile Technologies, 2 = VeriFone Inc."
+        data_type: integer
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [1, 2]
+      - name: passenger_count
+        description: "Number of passengers in the vehicle. Often null"
+        data_type: integer
+      - name: trip_distance_miles
+        description: "Number of miles travelled in the trip"
+      - name: fare_amount
+        description: "Amount of fare charged for the trip"
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+
