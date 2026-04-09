@@ -38,3 +38,6 @@ models:
               arguments:
                 to: ref('dim_minute')
                 field: time_key
+
+  - name: int_rolling_trip_count_7days
+    description: "Rolling 7 day count per location"
