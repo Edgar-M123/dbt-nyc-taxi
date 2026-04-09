@@ -19,3 +19,5 @@ dbt_modules/
 # large files
 data_files/
 *.parquet
+databases/
+.duckdb

@@ -1,6 +1,6 @@
 sources:
   - name: raw_taxi
-    database: raw
+    database: analytics
     schema: taxi
     config:
       enabled: true

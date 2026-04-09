@@ -1,13 +1,15 @@
 
 with source as (
-    select * from {{ source("raw_taxi", "yellow_tripdata") }}
+    select 
+        *
+    from {{ source("raw_taxi", "yellow_tripdata") }}
 ),
 
 renamed as (
     SELECT
         vendorid as vendor_id,
-        {{ dbt_date.from_unixtimestamp("tpep_pickup_datetime", format="microseconds") }} as pickup_timestamp,
-        {{ dbt_date.from_unixtimestamp("tpep_dropoff_datetime", format="microseconds") }} as dropoff_timestamp,
+        tpep_pickup_datetime as pickup_timestamp,
+        tpep_dropoff_datetime as dropoff_timestamp,
         passenger_count,
         trip_distance as trip_distance_miles,
         ratecodeid as rate_code_id,
@@ -26,7 +28,6 @@ renamed as (
         cbd_congestion_fee as cbd_congestion_fee,
         total_amount
     FROM source
-    WHERE pickup_timestamp <= dropoff_timestamp
 )
 
 select * from renamed

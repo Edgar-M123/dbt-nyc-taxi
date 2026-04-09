@@ -15,8 +15,8 @@ dim_minutes as (
             WHEN hour >= 12 then 'PM'
             else 'AM'
         end) as AM_PM,
-        CONCAT(LPAD(TO_CHAR( hour_12_hr ), 2, '0'), ':', LPAD( TO_CHAR(minute), 2, '0' ), ' ', AM_PM) as time_label_12_hr,
-        CONCAT(LPAD(TO_CHAR( hour ), 2, '0'), ':', LPAD( TO_CHAR(minute), 2, '0' )) as time_label_24_hr
+        CONCAT(LPAD(cast( hour_12_hr as text), 2, '0'), ':', LPAD( cast(minute as text), 2, '0' ), ' ', AM_PM) as time_label_12_hr,
+        CONCAT(LPAD(cast( hour as text), 2, '0'), ':', LPAD( cast(minute as text), 2, '0' )) as time_label_24_hr
     from minute_timestamps
 )
 

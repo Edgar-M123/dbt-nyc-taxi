@@ -3,12 +3,13 @@
 with extracted_dates as (
     SELECT
         {{ dbt_utils.generate_surrogate_key(['vendor_id', 'pickup_timestamp','dropoff_timestamp', 'pickup_location_id', 'dropoff_location_id']) }} as trip_id,
-        to_number( to_char( cast(pickup_timestamp as date), 'YYYYMMDD')) as pickup_date_key,
-        to_number( to_char( cast(dropoff_timestamp as date), 'YYYYMMDD')) as dropoff_date_key,
-        date_part(HOUR, pickup_timestamp) * 100 + date_part(MINUTE, pickup_timestamp) as pickup_time_key,
-        date_part(HOUR, dropoff_timestamp) * 100 + date_part(MINUTE, dropoff_timestamp) as dropoff_time_key,
+        {{ timestamp_to_date_key('pickup_timestamp') }} as pickup_date_key,
+        {{ timestamp_to_date_key('dropoff_timestamp') }} as dropoff_date_key,
+        {{timestamp_to_time_key('pickup_timestamp')}} as pickup_time_key,
+        {{timestamp_to_time_key('dropoff_timestamp')}} as dropoff_time_key,
         *
     FROM {{ ref('stg_yellow_trips') }}
+    WHERE pickup_timestamp <= dropoff_timestamp
 ),
 
 -- trips with 2 entries with a negative and positive fare amount

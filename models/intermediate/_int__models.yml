@@ -2,7 +2,7 @@
 version: 2
 
 models:
-  - name: int_fct_yellow_trips
+  - name: int_yellow_trips_deduplicated
     description: "Intermediate yellow trip data"
     columns:
       - name: trip_id
