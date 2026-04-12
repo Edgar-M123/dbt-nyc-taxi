@@ -10,6 +10,7 @@ models:
         data_tests:
           - unique
           - not_null
+
       - name: pickup_date_key
         description: "Key to date dimension"
         data_tests:
@@ -17,6 +18,7 @@ models:
               arguments:
                 to: ref('dim_date')
                 field: date_key
+
       - name: dropoff_date_key
         description: "Key to date dimension"
         data_tests:
@@ -24,6 +26,7 @@ models:
               arguments:
                 to: ref('dim_date')
                 field: date_key
+
       - name: pickup_time_key
         description: "Key to time dimension"
         data_tests:
@@ -31,6 +34,7 @@ models:
               arguments:
                 to: ref('dim_minute')
                 field: time_key
+
       - name: dropoff_time_key
         description: "Key to time dimension"
         data_tests:

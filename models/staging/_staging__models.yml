@@ -6,17 +6,25 @@ models:
     description: "Staging yellow trip data"
     columns:
       - name: vendor_id
-        description: "Code indicating the Yellow Taxi vendor used by the rider. 1 = Creative Mobile Technologies, 2 = VeriFone Inc."
+        description: "Code indicating the Yellow Taxi vendor used by the rider. 1 = Creative Mobile Technologies, 2 = VeriFone Inc., 6 = Myle Technologies, 7 = Helix"
         data_type: integer
         data_tests:
           - accepted_values:
               arguments:
-                values: [1, 2]
+                values: [1, 2, 6, 7]
+
       - name: passenger_count
         description: "Number of passengers in the vehicle. Often null"
         data_type: integer
+        data_tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 10
+              row_condition: "passenger_count is not null"
+
       - name: trip_distance_miles
         description: "Number of miles travelled in the trip"
+
       - name: fare_amount
         description: "Amount of fare charged for the trip"
         data_tests:
@@ -24,3 +32,35 @@ models:
               config:
                 severity: warn
 
+      - name: pickup_location_id
+        description: "Location ID of the pickup location. Foreign key to the taxi_zone_lookup dimension table."
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('taxi_zone_lookup')
+                field: locationid
+
+      - name: dropoff_location_id
+        description: "Location ID of the pickup location. Foreign key to the taxi_zone_lookup dimension table."
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('taxi_zone_lookup')
+                field: locationid
+
+      - name: payment_type
+        description: "Values from 0-6 indicating which payment method was used. Should never be null as a value of 5 indicates Unknown."
+        data_tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 6
+
+      - name: rate_code_id
+        description: "Values from 1-6 & 99 indicating the rate code in effect by the end of the trip. Should never be null as a value of 99 indicates Unknown."
+        data_tests:
+          - not_null:
+              config:
+                severity: error
+          - accepted_values:
+              arguments:
+                values: [1, 2, 3, 4, 5, 6, 99]
